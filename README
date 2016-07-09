@@ -2,5 +2,6 @@ Keytarboard
 G van der Kolf 2016
 
 A small app that translates keyboard presses into Jack MIDI notes.
-The keyboard is mapped like a guitar.
+The keyboard is mapped like a guitar, with Shift, Caps Lock, Tab and ` being the
+open fret notes (E, A, D and G, respectively).
  

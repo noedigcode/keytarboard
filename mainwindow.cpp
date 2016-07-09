@@ -79,7 +79,7 @@ void MainWindow::setupKeyMap()
     keyMap.insert( Qt::Key_Backslash, temp++ );
 
     temp = row4base;
-    keyMap.insert( Qt::Key_Atilde, temp++ );
+    keyMap.insert( Qt::Key_QuoteLeft, temp++ );
     keyMap.insert( Qt::Key_1, temp++ );
     keyMap.insert( Qt::Key_2, temp++ );
     keyMap.insert( Qt::Key_3, temp++ );
@@ -137,8 +137,8 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
 
         // Unmanaged
-        userMessage("Unmanaged key: " + keyEvent->text());
-        return false;
+        userMessage("Unmanaged key: " + keyEvent->text() + " (0x" + QString::number( keyEvent->key(), 16 ) + ")");
+        return true;
     }
 
     if (event->type() == QEvent::MouseMove) {
