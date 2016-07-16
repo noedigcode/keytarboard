@@ -60,6 +60,21 @@ int jackEngine::jackProcessCallback(jack_nframes_t nframes, void *arg)
     return 0;
 }
 
+void jackEngine::startJackTransport()
+{
+    jack_transport_start(client);
+}
+
+void jackEngine::stopJackTransport()
+{
+    jack_transport_stop(client);
+}
+
+bool jackEngine::isTransportStopped()
+{
+    return jack_transport_query(client, NULL) == JackTransportStopped;
+}
+
 
 bool jackEngine::clientIsActive()
 {

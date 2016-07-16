@@ -13,12 +13,18 @@ MainWindow::MainWindow(QApplication *appPtr, QWidget *parent) :
 
     setupKeyMap();
 
+    userMessage("Keys are mapped like a guitar, with Shift, Caps Lock, Tab and tilde being the open strings E A D G.");
+    userMessage("Space bar starts and stops Jack transport.");
+    userMessage("----------------------------");
+
     if ( jack.InitJackClient("Keytarboard") ) {
         userMessage("Jack client started: " + jack.clientName());
         app->installEventFilter(this);
     } else {
         userMessage("ERROR starting Jack client.");
     }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -113,6 +119,8 @@ void MainWindow::sendMidiEvent(unsigned char type, unsigned char data1, unsigned
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+
+
     if (event->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
@@ -133,6 +141,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
         if (keyMap.contains(keyEvent->key())) {
             sendMidiEvent(MIDI_EVENT_TYPE_NOTEON, keyMap.value(keyEvent->key()), 80);
+            return true;
+        }
+
+        if (keyEvent->key() == Qt::Key_Space) {
+            if (jack.isTransportStopped()) {
+                jack.startJackTransport();
+            } else {
+                jack.stopJackTransport();
+            }
             return true;
         }
 

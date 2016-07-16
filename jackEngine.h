@@ -97,6 +97,10 @@ public:
     QStringList getAudioInputPortsList();
     QStringList getAudioOutputPortsList();
 
+    void startJackTransport();
+    void stopJackTransport();
+    bool isTransportStopped();
+
     jack_client_t* client;
     jack_nframes_t nframes;
     jack_port_t* midi_output_port;
